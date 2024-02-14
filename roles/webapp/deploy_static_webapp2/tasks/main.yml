@@ -1,0 +1,14 @@
+- name: set index file variable
+  set_fact:
+    index_file: "{% if inventory_hostname == 'serverA' %}{{ app1_index_file }}{% else %}{{app2_index_file}}{% endif %}"
+
+
+- name: Debug index file
+  debug:
+    var: index_file
+    
+- name: Copy content in /var/www/html
+  copy:
+    src: "{{ index_file }}"
+    dest: /var/www/html/index.html
+    owner: root

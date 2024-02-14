@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: yes
+
+  roles:
+    - create_directory
+    - create_file
+    - append_content_to_file
+  vars_files:
+    - ../../vars/main.yml

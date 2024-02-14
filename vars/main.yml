@@ -1,0 +1,10 @@
+dir_file:
+  base_path: "/home"
+  dir_name: "test_dir"
+  file_name: "test_file.txt"
+  static_website_dir: static-websites
+  app1: static-website-example
+  app2: anon-ecommerce-website
+app1: "/home/static-websites/static-website-example"
+app2: "/home/static-websites/anon-ecommerce-website"
+

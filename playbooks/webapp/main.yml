@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: yes
+
+  roles:
+    - common/install_git
+    - common/clone_static_webapp
+    - install_apache
+    - deploy_static_webapp
+  vars_files:
+    - ../../vars/main.yml

@@ -1,0 +1,11 @@
+---
+MyServers:
+  hosts:
+    serverA:
+      ansible_host: 172.168.2.5
+      ansible_user: root
+      ansible_password: 123456
+    serverB:
+      ansible_host: 172.168.2.6
+      ansible_user: root
+      ansible_password: 123456

@@ -1,0 +1,18 @@
+---
+- name: Verifier si le dossier exist
+  include_role:
+   name: check_directroy_exists
+- name: SUpprimer un dossier
+  ansible.builtin.file:
+    path: "{{ dir_file.base_path }}/{{ dir_file.dir_name }}"
+    state: absent
+    force: yes
+    owner: root
+    group: root
+    mode: '0755'
+  when: directory_data.stat.exists
+
+- name: Dossier inexistant
+  debug:
+    msg: "Le dossier {{ dir_file.base_path }}/{{ dir_file.dir_name }} n'existe pas!"
+  when: not directory_data.stat.exists

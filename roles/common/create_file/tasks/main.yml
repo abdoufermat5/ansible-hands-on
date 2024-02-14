@@ -1,0 +1,8 @@
+---
+- name: Creer un dossier
+  ansible.builtin.file:
+    path: "{{ dir_file.base_path }}/{{ dir_file.dir_name }}/{{ dir_file.file_name }}"
+    state: touch
+    owner: root
+    group: root
+    mode: '0644'

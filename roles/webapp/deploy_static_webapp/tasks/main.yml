@@ -1,0 +1,30 @@
+- name: set index file variable
+  set_fact:
+    app_folder: "{{ app1 if inventory_hostname == 'serverA' else app2 }}"
+
+
+- name: Check if repository folder exists and is not empty
+  find:
+    path: "{{app_folder}}"
+  register: filesFound
+
+- name: Debug app folder
+  debug:
+    var: app_folder
+
+- name: Delete files
+  shell:
+    cmd: rm -rf /var/www/html/*
+
+- name: Copier le contenu du repertoire dans var/www/html
+  shell:
+    cmd: cp -R {{app_folder}}/* /var/www/html
+  when: filesFound.matched > 0
+
+- name: Restart apache server
+  shell:
+   cmd: service apache2 restart
+
+- fail:
+    msg: 'Le dossier {{app_folder}} est vide'
+  when: filesFound.matched == 0

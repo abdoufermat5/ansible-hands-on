@@ -1,0 +1,14 @@
+---
+- name: import file check
+  include_role:
+    name: check_file_exists
+- name: Supprimer un fichier
+  lineinfile:
+    path: "{{ dir_file.base_path }}/{{ dir_file.dir_name }}/{{ dir_file.file_name }}"
+    line: "Hello world from {{ dir_file.base_path }}/{{ dir_file.dir_name }}/{{ dir_file.file_name }}!"
+    create: yes
+
+- name: Fichier inexistant
+  debug:
+    msg: "Le fichier {{ dir_file.base_path }}/{{ dir_file.dir_name }}/{{ dir_file.file_name }} n'existe pas!"
+  when: not file_data.stat.exists

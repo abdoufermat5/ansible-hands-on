@@ -1,0 +1,26 @@
+---
+- name: change certificate reference
+  shell:
+    cmd: git config --global http.sslverify false
+
+- name: set app folder variable
+  set_fact:
+    app_folder: "{{ app1 if inventory_hostname == 'serverA' else app2 }}"
+    repo_name: "https://github.com/{{ 'cloudacademy/' + dir_file.app1 if inventory_hostname == 'serverA' else  'codewithsadee/' + dir_file.app2 }}.git"
+- name: Debug app folder variable
+  debug:
+    var: app_folder
+- name: Debug repo_name variable
+  debug:
+    var: repo_name
+- name: Vider le repertoire
+  shell:
+    cmd: rm -rf {{app_folder}}/* {{app_folder}}/.git 
+
+- name: Cloner repo github
+  git:
+    repo: "{{ repo_name }}"
+    dest: "{{ app_folder }}"
+    clone: true
+    accept_hostkey: true
+    update: true

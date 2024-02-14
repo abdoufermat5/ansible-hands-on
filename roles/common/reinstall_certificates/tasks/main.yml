@@ -1,0 +1,22 @@
+- name: reinstall certificates
+  shell:
+    cmd: apt-get install --reinstall ca-certificates -y
+
+- name: create root cacert.org file
+  file:
+    path: /usr/local/share/ca-certificates/cacert.org
+    state: directory
+    mode: 0755
+- name: download root certificate file
+  get_url:
+    url: http://www.cacert.org/certs/root.crt
+    dest: /usr/local/share/ca-certificates/cacert.org
+
+- name: download class3 certificate file
+  get_url:
+    url: http://www.cacert.org/certs/class3.crt
+    dest: /usr/local/share/ca-certificates/cacert.org
+
+- name: Update ca-certificates
+  shell:
+    cmd: update-ca-certificates

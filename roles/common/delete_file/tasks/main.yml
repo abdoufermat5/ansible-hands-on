@@ -1,0 +1,22 @@
+---
+- name: Import role
+  include_role: 
+    name: check_file_exists
+- name: Supprimer un fichier
+  ansible.builtin.file:
+    path: "{{ dir_file.base_path }}/{{ dir_file.dir_name }}"
+    state: absent
+    force: yes
+    owner: root
+    group: root
+    mode: '0755'
+  when: file_data.stat.exists
+
+- name: Debug de file_data.stat.exists
+  debug:
+    var: file_data.stat.exists
+
+- name: Fichier inexistant
+  debug:
+    msg: "Le fichier {{ dir_file.base_path }}/{{ dir_file.dir_name }}/{{ dir_file.file_name }} n'existe pas!"
+  when: not file_data.stat.exists
