@@ -28,8 +28,9 @@ from ansible.module_utils.basic import AnsibleModule
 
 def run_module():
     module_args = dict(
+        name=dict(type='str', required=True),
         path=dict(type='str', required=True),
-        get_size=dict(type='bool', required=False, default=True)
+        to_human=dict(type='bool', required=False, default=False)
     )
 
     result = dict(
@@ -49,10 +50,10 @@ def run_module():
         
     result['dir_name'] = module.params['path']
     
-
-    if module.params['get_size']:
-        s = get_size(module.params['path'])
-        result['size_dir'] = s
+    s = get_size(module.params['path'])
+    result['size_dir'] = s
+    if module.params['to_human']:
+        
         result['human_rd'] = size_to_human(s)
 
     if module.params['path'] == '':

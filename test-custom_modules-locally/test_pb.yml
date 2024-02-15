@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Get the size of a directory
+    my_module:
+      name: Get folder size
+      path: ../../
+      get_size: yes
+    register: testout
+  - name: Create json file
+    file:
+      path: ./json_out.json
+      state: touch
+      mode: 0644
+  - name: Save to a file
+    copy:
+      dest: ./json_out.json
+      content: "{{ testout | to_nice_json(indent=2) }}"
+  - name: SHow on debug
+    debug:
+      var: testout 
